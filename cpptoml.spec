@@ -20,7 +20,7 @@ TOML should be easy to parse into data structures in
 a wide variety of languages.
 
 %prep
-%setup -q
+%autosetup -n %{prjname}-toml-v%{version}
 
 %build
 cmake .
