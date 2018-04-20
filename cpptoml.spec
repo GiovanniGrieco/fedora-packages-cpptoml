@@ -3,13 +3,14 @@
 
 Name: %{prjname}
 Version: %{prjversion}
-Release: 10%{?dist}
+Release: 0%{?dist}
 Summary: cpptoml is a header-only library for parsing TOML
 
 License: MIT
 URL:     https://github.com/skystrife/%{prjname}
 Source0: https://github.com/skystrife/%{prjname}/archive/toml-v%{prjversion}.tar.gz
 BuildArch: noarch
+BuildRequires: cmake
 
 %description
 cpptoml is a header-only library for parsing TOML.
