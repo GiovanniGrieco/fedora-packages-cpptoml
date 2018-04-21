@@ -24,11 +24,12 @@ a wide variety of languages.
 %autosetup -n %{prjname}-toml-v%{version}
 
 %build
-cmake .
-make
+%cmake .
+%make_build
 
 %install
-make DESTDIR=%{_builddir} install
+mkdir -p $RPM_BUILD_ROOT/usr/include/
+%{__install} -m 0644 include/cpptoml.h $RPM_BUILD_ROOT/usr/include/cpptoml.h
 
 %clean
 
