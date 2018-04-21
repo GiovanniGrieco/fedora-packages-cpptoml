@@ -35,6 +35,7 @@ make
 %defattr(-,root,root,-)
 %doc README.md
 %license LICENSE
+%{_includedir}/cpptoml.h
 
 %changelog
 * Fri Apr 20 2018 Giovanni Grieco <corsaro@fedoraproject.org> - 0.4.0
