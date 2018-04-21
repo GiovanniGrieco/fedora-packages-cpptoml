@@ -28,6 +28,7 @@ cmake .
 make
 
 %install
+make DESTDIR=%{buildroot} install
 
 %clean
 
