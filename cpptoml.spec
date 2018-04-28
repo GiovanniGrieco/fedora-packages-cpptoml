@@ -1,44 +1,55 @@
-%define prjname cpptoml
-%define prjversion 0.4.0
-
-Name: %{prjname}
-Version: %{prjversion}
-Release: 0%{?dist}
-Summary: cpptoml is a header-only library for parsing TOML
-
-License: MIT
-URL:     https://github.com/skystrife/%{prjname}
-Source0: https://github.com/skystrife/%{prjname}/archive/toml-v%{prjversion}.tar.gz
-BuildArch: noarch
-BuildRequires: cmake
+Name:          cpptoml
+Version:       0.4.0
+Release:       1%{?dist}
+Summary:       A header-only library for parsing TOML
+Group:         Applications/Development
+URL:           https://github.com/skystrife/cpptoml
+Source0:       https://github.com/skystrife/cpptoml/archive/toml-v%{version}.tar.gz
+License:       MIT
+BuildRequires: cmake, gcc-c++
 
 %description
-cpptoml is a header-only library for parsing TOML.
-TOML aims to be a minimal configuration file format
-that is easy to read due to obvious semantics.
-TOML is designed to map unambiguously to a hash table.
-TOML should be easy to parse into data structures in
-a wide variety of languages.
+%{summary}.
+
+%package devel
+Summary:       Development files for %{name}
+
+%description devel
+This package contains libraries and header files for developing applications that use %{name}.
+
+%global debug_package %{nil}
 
 %prep
-%autosetup -n %{prjname}-toml-v%{version}
+%autosetup -n cpptoml-toml-v%{version}
 
 %build
-%cmake .
-%make_build
+cmake .
+make
 
 %install
-mkdir -p $RPM_BUILD_ROOT/usr/include/
-%{__install} -m 0644 include/cpptoml.h $RPM_BUILD_ROOT/usr/include/cpptoml.h
+[ "%{buildroot}" != / ] && rm -rf "%{buildroot}"
+
+mkdir -p %{buildroot}%{_bindir}
+install -m 0755 cpptoml-parser %{buildroot}%{_bindir}/
+
+mkdir -p %{buildroot}%{_includedir}/
+install -m 0644 include/cpptoml.h %{buildroot}%{_includedir}/
 
 %clean
+[ "%{buildroot}" != / ] && rm -rf "%{buildroot}"
 
 %files
-%defattr(-,root,root,-)
-%doc README.md
-%license LICENSE
+%defattr(-,root,root)
+%{_bindir}/cpptoml-parser
+%doc LICENSE
+
+%files devel
+%defattr(-,root,root)
 %{_includedir}/cpptoml.h
+%doc README.md
 
 %changelog
-* Fri Apr 20 2018 Giovanni Grieco <corsaro@fedoraproject.org> - 0.4.0
-- Made package available for personal COPR repo.
+* Sat Apr 28 2018 Giovanni Grieco <giovanni.grc96@gmail.com> 0.4.0-1
+- package ported to Fedora
+* Sun Mar 22 2015 Davide Madrisan <davide.madrisan@gmail.com> 0.4.0-1mamba
+- package created by autospec
